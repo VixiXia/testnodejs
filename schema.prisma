@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum FileTypes {
+  EXCEL
+  WORD
+  CSV
+  PDF
+  OTHER
+}
+
+enum FileStorage {
+  BLOB
+  IMANAGE
+}
+
+model File {
+  id               String      @id @default(uuid())
+  //
+  filename         String
+  documentId       String
+  //
+  fileStorage      FileStorage @default(BLOB)
+  //
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  //
+  requestId        String?
+  //
+  projectId        String
+  //
+  uploadedByUserId String
+  //
+  fileType         FileTypes   @default(CSV)
+  fileSize         Int
+  downloadLink     String
+  // 
+
+  FileStorageSync FileStorageSync[]
+}
+
+model FileStorageSync {
+  id           String      @id @default(uuid())
+  documentId   String
+  fileStorage  FileStorage @default(BLOB)
+  downloadLink String
+  fileId       String?     @unique
+  File         File?       @relation(fields: [fileId], references: [id], onDelete: SetNull)
+  //
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
