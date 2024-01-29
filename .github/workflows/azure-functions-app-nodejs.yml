@@ -51,7 +51,7 @@ jobs:
         cache: yarn
 
     - name: 'Resolve Project Dependencies Using Npm'
-      shell: pwsh # For Linux, use bash
+      shell: bash
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
         #change2
