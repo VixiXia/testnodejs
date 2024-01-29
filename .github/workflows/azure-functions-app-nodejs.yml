@@ -55,12 +55,12 @@ jobs:
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
         #change2
-        #npm install
-        #npm run build --if-present
-        #npm run test --if-present
-        yarn install --ignore-scripts
-        yarn prisma:generate
-        yarn build --if-present
+        npm install
+        npm run build --if-present
+        npm run test --if-present
+        #yarn install --ignore-scripts
+        #yarn prisma:generate
+        #yarn build --if-present
         popd
 
     - name: 'Run Azure Functions Action'
